@@ -12,6 +12,7 @@
     
     .first-section {
       max-width: 100%;
+      display: block;
     }
     .second-section {
       max-width: 100%;
@@ -74,7 +75,7 @@
     .session-data {
       width:460px;
       float:right;
-      margin-left: 100px;
+      margin-left: 170px;
     }
     
     .panel-card {
@@ -119,10 +120,10 @@
     </div>
       <div class="second-section">
         
-        <div class="col-sm-12 col-md-4" style="width:380px; height: 332px; margin-left: 90px;">
+        <div class="col-sm-12 col-md-4" style="width:380px; height: 332px; margin-left: 110px;">
       		<div class="panel panel-card people-panel text-center">
       			<div class="panel-title">
-      				<h5 class="no-margin m-b">Users Watching Videos Now</h5>
+      				<h5 class="no-margin m-b" style="font-size:15px;">Users Currently Streaming</h5>
       			</div>
       			<div class="panel-body">
       				<div id="sensor-moni-text" style="height:250px;">
@@ -143,7 +144,7 @@
         	    function() {
         	      var num = number()
         	      $('.dynamic-text').text(num.toString());
-        	    },1500)
+        	    },2500)
       	  });
       	</script>
         
