@@ -70,53 +70,96 @@
       height: 300px;
       
     }
+    .session-data {
+      width:460px;
+      float:right;
+      margin-left: 100px;
+    }
+    
+    .panel-card {
+      box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.25);
+      background-color: white;
+    }
+    .people-panel {
+      background-color: #00a0e9 !important;
+      color: #ffffff;
+    }
+    
+    .panel {
+      margin-bottom: 20px;
+      background-color: #fff;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+      box-shadow: 0 1px 1px rgba(0,0,0,.05);
+      
+      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+      font-size: 14px;
+      line-height: 1.42857143;
+    }
     </style>
 </head>
 
 <body>
     <div class="first-section"> 
-      <div class="app-launches circle-div">
-          <span class="span-css center-block"> Total Users</span>
-          <div class="numberCircle center-block"></div>
-      </div>
-      <div class="avg-monthly-visits circle-div">
-          <span class="span-css center-block"> Monthly Active Users</span>
-          <div class="numberCircle center-block"></div>
-      </div>
-      <div class="avg-logins circle-div">
-          <span class="span-css center-block"> DAU/MAU</span>
-          <div class="numberCircle center-block"></div>
-      </div>
+        <div class="avg-monthly-visits circle-div">
+            <span class="span-css center-block"> Monthly Active Users</span>
+            <div class="numberCircle center-block"></div>
+        </div>
+        <div class="app-launches circle-div">
+            <span class="span-css center-block"> Total Video Views</span>
+            <div class="numberCircle center-block"></div>
+        </div>
+        
+        <div class="avg-logins circle-div">
+            <span class="span-css center-block"> AVG Videos Per User</span>
+            <div class="numberCircle center-block"></div>
+        </div>
     </div>
-    <div class="second-section">
-      <div class="live-view">
-    </div>  
+      <div class="second-section">
+        <span class="span-css center-block"> AVG Videos Per User</span>
+        <div class="col-sm-12 col-md-4" style="width:33%;">
+      		<div class="panel panel-card people-panel">
+      			<div class="panel-title">
+      				<h5 class="no-margin m-b">People</h5>
+      			</div>
+      			<div class="panel-body">
+      				<div id="sensor-moni-text" style="height:250px;">
+      					<h1>284</h1>
+      				</div>
+      			</div>
+      		</div>
+      	</div>
+        
+        <div class="live-view"></div>  
       
     </div>
+    
 
-
+    <br clear="all" />
     <script>
         /* Average Monthly Visits per User */
         var avgMonthlyVisits = MP.api.query('/api/2.0/segmentation/', {
             from: moment().subtract(1, 'months'),
             to: moment(),
-            event: 'App Open',
+            event: 'Watched Video',
             unit: 'month',
             type: 'average'
             }, {dataType:'json'}
         ).done(function(data){
-            var finalMonth = data['data']["values"]["App Open"]
+            var finalMonth = data['data']["values"]["Watched Video"]
             var key = _.keys(finalMonth)[0]
 
-            var finalMonthData = Math.round(finalMonth[key],2)
+            var finalMonthData = Math.round(finalMonth[key], 2)
 
-            var circle = $('.app-launches > .numberCircle')
+            var circle = $('.avg-logins > .numberCircle')
             circle.text(finalMonthData.toString())
 
         });
 
-        var totalsQuery = MP.api.events('', {
-            unit: 'month'
+        var totalsQuery = MP.api.events('App Open', {
+            unit: 'month',
+            type: 'unique'
         }).done(function(data){
             var key = _.keys(data.values())[0]
             var launchData = data.values()[key]
@@ -138,17 +181,22 @@
             to: moment(),
             event: 'Watched Video',
             unit: 'month',
-            type: 'average'
+            type: 'general'
             }, {dataType:'json'}
         ).done(function(data){
             var finalMonth = data['data']["values"]["Watched Video"]
             var key = _.keys(finalMonth)[0]
-            // var finalMonthData = Math.round(finalMonth[key],2)
+            var finalMonthData = Math.round(finalMonth[key], 2)
 
-            var circle = $('.avg-logins > .numberCircle')
-            circle.text("0");
+            var circle = $('.app-launches > .numberCircle')
+            circle.text(finalMonthData.toString());
         });
-
-
+        
+        /* Average LTV per subscription */
+        
+        
+        /* Live Video Streams on the Site Now */
+        
+        
 
     </script>
